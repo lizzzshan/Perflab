@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB8F150D1633843400B5D1BC /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8F150C1633843400B5D1BC /* main.cpp */; };
 		FB8F150F1633843400B5D1BC /* perflab.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB8F150E1633843400B5D1BC /* perflab.1 */; };
 /* End PBXBuildFile section */
 
@@ -26,8 +25,13 @@
 
 /* Begin PBXFileReference section */
 		FB8F15081633843400B5D1BC /* perflab */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = perflab; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB8F150C1633843400B5D1BC /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		FB8F150E1633843400B5D1BC /* perflab.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = perflab.1; sourceTree = "<group>"; };
+		FB8F15191633847900B5D1BC /* cs1300bmp.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cs1300bmp.cc; sourceTree = "<group>"; };
+		FB8F151A1633847900B5D1BC /* cs1300bmp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cs1300bmp.h; sourceTree = "<group>"; };
+		FB8F151B1633847900B5D1BC /* Filter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filter.cpp; sourceTree = "<group>"; };
+		FB8F151C1633847900B5D1BC /* Filter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Filter.h; sourceTree = "<group>"; };
+		FB8F151D1633847900B5D1BC /* FilterMain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FilterMain.cpp; sourceTree = "<group>"; };
+		FB8F151E1633847900B5D1BC /* rtdsc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rtdsc.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +64,12 @@
 		FB8F150B1633843400B5D1BC /* perflab */ = {
 			isa = PBXGroup;
 			children = (
-				FB8F150C1633843400B5D1BC /* main.cpp */,
+				FB8F15191633847900B5D1BC /* cs1300bmp.cc */,
+				FB8F151A1633847900B5D1BC /* cs1300bmp.h */,
+				FB8F151B1633847900B5D1BC /* Filter.cpp */,
+				FB8F151C1633847900B5D1BC /* Filter.h */,
+				FB8F151D1633847900B5D1BC /* FilterMain.cpp */,
+				FB8F151E1633847900B5D1BC /* rtdsc.h */,
 				FB8F150E1633843400B5D1BC /* perflab.1 */,
 			);
 			path = perflab;
@@ -117,7 +126,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8F150D1633843400B5D1BC /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +212,7 @@
 				FB8F15141633843400B5D1BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
