@@ -66,7 +66,8 @@ readFilter(string filename)
 {
     ifstream input(filename.c_str());
     
-    if ( ! input.bad() ) {
+    if ( ! input.bad() )
+    {
         int size = 0;
         input >> size;
         Filter *filter = new Filter(size);
@@ -82,11 +83,11 @@ readFilter(string filename)
         }
         return filter;
     }
+    
+    return NULL;
 }
 
-
-double
-applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
+double applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
 {
     
     long long cycStart, cycStop;
@@ -96,16 +97,21 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
     output -> width = input -> width;
     output -> height = input -> height;
     
-    int filtSize = filter -> getSize();     //reduce func calls in inner loops
-//    int val0, val1, val2 = 0;
-//    int filterGet = 0;
-//    int tempRow = 0;
-//    int tempCol = 0;
-    int filterDivisor = filter -> getDivisor();
-    int tempVal0, tempVal1, tempVal2 = 0;
+    int filtSize = filter -> getSize();         //Store loop invariants locally
+    int filterDivisor = filter -> getDivisor(); //to reduce function calls
     int inputWidth = (input -> width) - 1;
     int inputHeight = (input -> height) - 1;
     
+    
+    int filterMatrix[filtSize][filtSize];
+    
+    for(int a = 0; a < filtSize; ++a)       //Store filter matrix to reduce
+    {                                       //function calls in inner loops
+        for(int b = 0; b < filtSize; ++b)
+        {
+            filterMatrix[b][a] = filter->get(a, b);
+        }
+    }
     
     
     
@@ -117,73 +123,42 @@ applyFilter(struct Filter *filter, cs1300bmp *input, cs1300bmp *output)
             //  Code between the comment lines executes for each pixel
             //------------------------------------------------------------------
             
-            /*
-            for(int plane = 0; plane < 3; plane++)  //1 iteration for each color
+            int val0 = 0;
+            int val1 = 0;
+            int val2 = 0;
+            for (int j = 0; j < filtSize; ++j)
             {
-                
-                int value = 0;
-                for (int j = 0; j < filtSize; j++)
-                {
-                    for (int i = 0; i < filtSize; i++)
-                    {
-                        value = value +  input -> color[plane][row + i - 1][col + j - 1]* filter -> get(i, j);
-                    }
-                }
-                
-                
-                value = value / filter -> getDivisor();
-                if ( value  < 0 ) { value = 0; }
-                if ( value  > 255 ) { value = 255; }
-                output -> color[plane][row][col] = value;
-                
-            }
-            */
-            
-            int val0, val1, val2 = 0;
-            for (int j = 0; j < filtSize; ++j)  //combine these two loops
-            {                                   //into 1 loop that uses 1
-                int tempCol = col + j -1;           //var and modulus or some shit
+                int tempCol = col + j -1;
                 for (int i = 0; i < filtSize; ++i)
                 {
                     int tempRow = row + i - 1;
-                    int filterGet = filter -> get(i,j);
-                    
-                    /*
-                    tempVal0 = input -> color[0][tempRow][tempCol] * filterGet;
-                    tempVal1 = input -> color[1][tempRow][tempCol] * filterGet;
-                    tempVal2 = input -> color[2][tempRow][tempCol] * filterGet;
-                    
-                    val0 += tempVal0;
-                    val1 += tempVal1;
-                    val2 += tempVal2;
-                    */
-                     
-                    
-                    val0 += input -> color[0][tempRow][tempCol] * filterGet;
-                    val1 += input -> color[1][tempRow][tempCol] * filterGet;
-                    val2 += input -> color[2][tempRow][tempCol] * filterGet;
-                     
-
+                    int filterGet = filterMatrix[j][i];
+                    //Unrolled plane loop for better pipelining
+                    //Seperate variables, fewer jumps, less dependencies
+                    val0 += input -> color[tempCol][tempRow][0] * filterGet;
+                    val1 += input -> color[tempCol][tempRow][1] * filterGet;
+                    val2 += input -> color[tempCol][tempRow][2] * filterGet;
                 }
             }
             
+            val0 /= filterDivisor;
+            val1 /= filterDivisor;
+            val2 /= filterDivisor;
             
-            val0 = val0 / filterDivisor;
-            val1 = val1 / filterDivisor;
-            val2 = val2 / filterDivisor;
             
-            if ( val0 < 0 ) { val0 = 0; }
-            if ( val0  > 255 ) { val0 = 255; }
             
-            if ( val1 < 0 ) { val1 = 0; }
-            if ( val1  > 255 ) { val1 = 255; }
+            val0 = val0 < 0   ? 0   : val0; //I read that using these might be
+            val1 = val1 < 0   ? 0   : val1; //slightly better than if statements
+            val2 = val2 < 0   ? 0   : val2; //Not sure why. Less jumps or
+                                            //Something? Maybe better dependency
+            val0 = val0 > 255 ? 255 : val0;
+            val1 = val1 > 255 ? 255 : val1;
+            val2 = val2 > 255 ? 255 : val2;
+
             
-            if ( val2 < 0 ) { val2 = 0; }
-            if ( val2  > 255 ) { val2 = 255; }
-            
-            output -> color[0][row][col] = val0;
-            output -> color[1][row][col] = val1;
-            output -> color[2][row][col] = val2;
+            output -> color[col][row][0] = val0;
+            output -> color[col][row][1] = val1;
+            output -> color[col][row][2] = val2;
             
             //------------------------------------------------------------------
         }

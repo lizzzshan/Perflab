@@ -2,7 +2,7 @@
 ##
 
 CXX	=g++
-CXXFLAGS= -m32 -funroll-loops -fprefetch-loop-arrays
+CXXFLAGS= -m64 -O3
 
 goals: run
 	echo "Done"

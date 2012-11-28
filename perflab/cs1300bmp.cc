@@ -1829,8 +1829,7 @@ static void u_short_int_write ( unsigned short int u_short_int_val,
 //
 /////////////////////////////////////////////////////////////////////////////
 
-int
-cs1300bmp_readfile(char *filename, struct cs1300bmp *image)
+int cs1300bmp_readfile(char *filename, struct cs1300bmp *image)
 {
     bool error;
     unsigned char *rarray;
@@ -1848,7 +1847,8 @@ cs1300bmp_readfile(char *filename, struct cs1300bmp *image)
     //
     error = bmp_read ( filename, &width, &height,
                       &rarray, &garray, &barray );
-    if ( error ) {
+    if ( error )
+    {
         //
         //  Free the memory.
         //
@@ -1856,17 +1856,21 @@ cs1300bmp_readfile(char *filename, struct cs1300bmp *image)
         delete [] garray;
         delete [] barray;
         return 0;
-    } else {
+    }
+    else
+    {
         //
         // Copy the image from the flat representation to the array used for cs1300
         //
         image -> width = width;
         image -> height = height;
-        for (int row = 0; row < height; row ++ ) {
-            for (unsigned int col = 0; col < width; col ++ ) {
-                image -> color[COLOR_RED  ][row][col] = rarray[row * width + col];
-                image -> color[COLOR_GREEN][row][col] = garray[row * width + col];
-                image -> color[COLOR_BLUE ][row][col] = barray[row * width + col];
+        for (int row = 0; row < height; row ++ )
+        {
+            for (unsigned int col = 0; col < width; col ++ )
+            {   //Changed here to rearrange arrays for locality
+                image -> color[col][row][COLOR_RED  ] = rarray[row * width + col];
+                image -> color[col][row][COLOR_GREEN] = garray[row * width + col];
+                image -> color[col][row][COLOR_BLUE ] = barray[row * width + col];
             }
         }
         //
@@ -1884,8 +1888,7 @@ cs1300bmp_readfile(char *filename, struct cs1300bmp *image)
     
 }
 
-int
-cs1300bmp_writefile(char *filename, struct cs1300bmp *image)
+int cs1300bmp_writefile(char *filename, struct cs1300bmp *image)
 {
     int colorbytes = image -> width * image -> height;
     
@@ -1895,11 +1898,14 @@ cs1300bmp_writefile(char *filename, struct cs1300bmp *image)
     
     int height = image -> height;
     int width  = image -> width;
-    for (int row = 0; row < height; row ++ ) {
-        for (int col = 0; col < width; col ++ ) {
-            rarray[row * width + col] = image -> color[COLOR_RED  ][row][col];
-            garray[row * width + col] = image -> color[COLOR_GREEN][row][col];
-            barray[row * width + col] = image -> color[COLOR_BLUE ][row][col];
+    for (int row = 0; row < height; row ++ )
+    {
+        
+        for (int col = 0; col < width; col ++ )
+        {   //Changed here to rearrange arrays for locality
+            rarray[row * width + col] = image -> color[col][row][COLOR_RED  ];
+            garray[row * width + col] = image -> color[col][row][COLOR_GREEN];
+            barray[row * width + col] = image -> color[col][row][COLOR_BLUE ];
         }
     }
     

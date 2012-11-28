@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		FB8F150F1633843400B5D1BC /* perflab.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB8F150E1633843400B5D1BC /* perflab.1 */; };
+		FB8F1520163384A600B5D1BC /* FilterMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8F151D1633847900B5D1BC /* FilterMain.cpp */; };
+		FB8F1521163384C800B5D1BC /* Filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FB8F151B1633847900B5D1BC /* Filter.cpp */; };
+		FB8F1522163384DD00B5D1BC /* cs1300bmp.cc in Sources */ = {isa = PBXBuildFile; fileRef = FB8F15191633847900B5D1BC /* cs1300bmp.cc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -126,6 +129,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB8F1520163384A600B5D1BC /* FilterMain.cpp in Sources */,
+				FB8F1521163384C800B5D1BC /* Filter.cpp in Sources */,
+				FB8F1522163384DD00B5D1BC /* cs1300bmp.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,14 +188,43 @@
 		FB8F15131633843400B5D1BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_STRICT_ALIASING = YES;
+				GCC_THREADSAFE_STATICS = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_VERSION = "";
+				LLVM_LTO = NO;
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
 			};
 			name = Debug;
 		};
 		FB8F15141633843400B5D1BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_DYNAMIC_NO_PIC = YES;
+				GCC_FAST_MATH = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_OPTIMIZATION_LEVEL = 2;
+				GCC_STRICT_ALIASING = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_THREADSAFE_STATICS = YES;
+				GCC_UNROLL_LOOPS = NO;
+				GCC_VERSION = "";
+				LLVM_LTO = NO;
+				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = NO;
 			};
 			name = Release;
 		};

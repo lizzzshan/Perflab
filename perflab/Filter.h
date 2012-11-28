@@ -2,7 +2,7 @@
 #ifndef _Filter_h_
 #define _Filter_h_
 
-using namespace std;
+//using namespace std;
 
 class Filter {
   int divisor;

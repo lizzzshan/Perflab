@@ -16,18 +16,18 @@
 #define MAX_COLORS 3
 
 struct cs1300bmp {
-  //
-  // Actual width used by this image
-  //
-  int width;
-  //
-  // Actual height used by this image
-  //
-  int height;
-  //
-  // R/G/B fields
-  //
-  unsigned char color[MAX_COLORS][MAX_DIM][MAX_DIM];
+    //
+    // Actual width used by this image
+    //
+    int width;
+    //
+    // Actual height used by this image
+    //
+    int height;
+    //
+    // R/G/B fields
+    //
+    unsigned char color[MAX_DIM][MAX_DIM][MAX_COLORS]; //rearranged for locality
 };
 
 //
@@ -37,10 +37,10 @@ struct cs1300bmp {
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-int cs1300bmp_readfile(char *filename, struct cs1300bmp *image);
-int cs1300bmp_writefile(char *filename, struct cs1300bmp *image);
-
+    
+    int cs1300bmp_readfile(char *filename, struct cs1300bmp *image);
+    int cs1300bmp_writefile(char *filename, struct cs1300bmp *image);
+    
 #ifdef __cplusplus
 }
 #endif
